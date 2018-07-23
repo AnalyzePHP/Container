@@ -1,2 +1,2 @@
 # Container
-The IoC container used in the Analyze Framework. You can use it too!
+Documentation coming soon... for the time-being you can read [this blog post](https://developmentmatt.com/building-a-php-framework-part-7-the-container/) about the container.
