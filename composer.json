@@ -1,5 +1,5 @@
 {
-    "name": "analyzephp/framework",
+    "name": "analyzephp/container",
     "description": "The Analyze PHP Framework Container",
     "type": "project",
     "license": "MIT",
