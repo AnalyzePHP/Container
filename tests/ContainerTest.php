@@ -1,11 +1,12 @@
 <?php
+use \Mockery as m;
+use Tests\Utilities\FakeClass;
 use PHPUnit\Framework\TestCase;
 use Analyze\Container\Container;
+use Tests\Utilities\FakeSetterClass;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Tests\Utilities\FakeClass;
-use \Mockery as m;
 
 class ContainerTest extends MockeryTestCase
 {
@@ -115,5 +116,33 @@ class ContainerTest extends MockeryTestCase
 
         $container = new Container;
         $container->get('nope');
+    }
+
+    public function testSetterDefinition()
+    {
+        $container = new Container;
+
+        $container->addSetter('classname', 'Tests\Utilities\FakeSetterClass', [
+            'setName' => 'Bob'
+        ]);
+
+        $test = $container->get('classname');
+
+        $this->assertEquals('Bob', $test->name);
+    }
+
+    public function testSetterDefinitionExceptsMultipleMethods()
+    {
+        $container = new Container;
+
+        $container->addSetter('classname', 'Tests\Utilities\FakeSetterClass', [
+            'setName' => 'Bob',
+            'setAge' => 42,
+        ]);
+
+        $test = $container->get('classname');
+
+        $this->assertEquals('Bob', $test->name);
+        $this->assertEquals(42, $test->age);
     }
 }

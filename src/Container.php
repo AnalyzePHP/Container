@@ -12,6 +12,7 @@ use Closure;
 use Psr\Container\ContainerInterface;
 use Analyze\Container\Definitions\ClassDefinition;
 use Analyze\Container\Exceptions\NotFoundException;
+use Analyze\Container\Definitions\SetterDefinition;
 use Analyze\Container\Definitions\FactoryDefinition;
 use Analyze\Container\Definitions\DefinitionInterface;
 
@@ -43,6 +44,21 @@ class Container implements ContainerInterface
     }
 
     /**
+     * Add Class
+     *
+     * Add a class to the container.
+     *
+     * @param string $alias
+     * @param string $concrete
+     */
+    public function addClass(string $alias, string $concrete) : void
+    {
+        $definition = new ClassDefinition($concrete);
+
+        $this->add($alias, $definition);
+    }
+
+    /**
      * Add Factory
      *
      * Adds a factory definition to the container.
@@ -58,16 +74,15 @@ class Container implements ContainerInterface
     }
 
     /**
-     * Add Class
-     *
-     * Add a class to the container.
+     * Add Setter
      *
      * @param string $alias
      * @param string $concrete
+     * @param array  $methods
      */
-    public function addClass(string $alias, string $concrete) : void
+    public function addSetter(string $alias, string $concrete, array $methods) : void
     {
-        $definition = new ClassDefinition($concrete);
+        $definition = new SetterDefinition($concrete, $methods);
 
         $this->add($alias, $definition);
     }
